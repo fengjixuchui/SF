@@ -34,6 +34,89 @@
 iOS-Source-Probe 以 MIT 开源协议发布，转载引用请注明出处。
 
 
+
+
+#### 62 不同路径
+
+一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。
+
+机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。
+
+现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？
+
+![image](./source/63.png)
+
+网格中的障碍物和空位置分别用 1 和 0 来表示。
+
+说明：m 和 n 的值均不超过 100。
+
+```
+示例 1:
+
+输入:
+[
+  [0,0,0],
+  [0,1,0],
+  [0,0,0]
+]
+输出: 2
+解释:
+3x3 网格的正中间有一个障碍物。
+从左上角到右下角一共有 2 条不同的路径：
+1. 向右 -> 向右 -> 向下 -> 向下
+2. 向下 -> 向下 -> 向右 -> 向右
+```
+##### 题解
+![](./source/63-1.png)
+
+其实每次只向下 或向右 只需要将整个图 缩略成只有4个格子的图则D的路径和等于B和C的路径和，当有2*3个格子，则F=C+E.
+抽象成状态转移方程式则有
+```
+f(n,m)=f(n-1,m)+f(n,m-1)
+```
+
+```
+class Solution {
+ func uniquePaths(_ m: Int, _ n: Int) -> Int {
+	let item = Array.init(repeating: 0, count: m+1)
+	var dp = Array.init(repeating: item, count: n+1)
+	dp[0][1] = 1//默认是一条路
+	for i in 1...n{
+		for j in 1...m{
+			dp[i][j]=dp[i][j-1] + dp[i-1][j]//路径的总和等于 左边和上边的和
+		}
+	}
+	return dp[n][m];
+}
+}
+
+```
+
+#### 63 不同路径II
+和62不同是机器人走路有障碍
+则在计算路径的时候，遇到障碍则进行不统计路线即可。
+
+```
+class Solution {
+    func uniquePathsWithObstacles(_ obstacleGrid: [[Int]]) -> Int {
+        
+    let item = Array.init(repeating: 0, count: obstacleGrid[0].count+1)
+	var dp = Array.init(repeating: item, count: obstacleGrid.count+1)
+	dp[0][1] = 1//默认是一条路
+	for i in 1...obstacleGrid.count{
+		for j in 1...obstacleGrid[0].count{
+			if obstacleGrid[i-1][j-1] == 1 {//有障碍物 则终端该路
+				continue
+			}
+			dp[i][j]=dp[i][j-1] + dp[i-1][j]//路径的总和等于 左边和上边的和
+		}
+	}
+	return dp[obstacleGrid.count][obstacleGrid[0].count];
+    }
+}
+
+```
+
 ##### 179 最大数
 
 给定一组非负整数，重新排列它们的顺序使之组成一个最大的整数。
@@ -85,7 +168,7 @@ iOS-Source-Probe 以 MIT 开源协议发布，转载引用请注明出处。
 ```
 
 #### 187 重复的DNA序列
-#####题目
+##### 题目
 所有 DNA 都由一系列缩写为 A，C，G 和 T 的核苷酸组成，例如：“ACGAATTCCG”。在研究 DNA 时，识别 DNA 中的重复序列有时会对研究非常有帮助。
 
 编写一个函数来查找 DNA 分子中所有出现超过一次的 10 个字母长的序列（子串）。
@@ -163,5 +246,136 @@ iOS-Source-Probe 以 MIT 开源协议发布，转载引用请注明出处。
             i ++;
         }
         return m << i;
+    }
+```
+### 1267
+#### 题目
+这里有一幅服务器分布图，服务器的位置标识在 m * n 的整数矩阵网格 grid 中，1 表示单元格上有服务器，0 表示没有。
+
+如果两台服务器位于同一行或者同一列，我们就认为它们之间可以进行通信。
+
+请你统计并返回能够与至少一台其他服务器进行通信的服务器的数量。
+
+```
+
+示例 1：
+
+输入：grid = [[1,0],[0,1]]
+输出：0
+解释：没有一台服务器能与其他服务器进行通信。
+示例 2：
+
+输入：grid = [[1,0],[1,1]]
+输出：3
+解释：所有这些服务器都至少可以与一台别的服务器进行通信。
+示例 3：
+
+输入：grid = [[1,1,0,0],[0,0,1,0],[0,0,1,0],[0,0,0,1]]
+输出：4
+解释：第一行的两台服务器互相通信，第三列的两台服务器互相通信，但右下角的服务器无法与其他服务器通信。
+ 
+
+提示：
+
+m == grid.length
+n == grid[i].length
+1 <= m <= 250
+1 <= n <= 250
+grid[i][j] == 0 or 1
+```
+链接：https://leetcode-cn.com/problems/count-servers-that-communicate
+
+#### 题解
+按照每行每列统计，当每行大于1 或每列大于1 则进入计数。
+
+```
+    public int countServers2(int[][] grid) {
+    //统计每行的服务器个数
+        int[] rows = new int[grid.length];
+        //统计每列服务器个数
+        int[] cols = new int[grid[0].length];
+        for (int i = 0; i < rows.length; i++) {
+            for (int j = 0; j < cols.length; j++) {
+                if (grid[i][j] == 1){
+                    rows[i] ++;
+                    cols[j] ++;
+                }
+            }
+        }
+        int ret = 0;
+        for (int i = 0; i < rows.length ; i++) {
+            for (int j = 0; j < cols.length; j++) {
+                if (grid[i][j] == 1 &&(rows[i]> 1 || cols[j] > 1)){
+                    ret ++;
+                }
+            }
+        }
+        return  ret;
+    }
+```
+或者使用dfs搜索
+```
+class Tupe{
+    int x;
+    int y;
+    Tupe(int x,int y){
+        this.x = x;
+        this.y = y;
+    }
+Map<Integer,Integer>cols = new HashMap<>();
+    Map<Integer,Integer>rows = new HashMap<>();
+    public int countServers(int[][] grid) {
+        int[][] visited = new int[grid.length][grid[0].length];
+        int ret = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == 1 && visited[i][j] == 0){
+                    visited[i][j] = 1;
+                    Tupe tupe = new Tupe(i,j);
+                    int all = findAllComputer(tupe,grid,visited);
+                    if (all > 0){
+                        ret = ret + 1 + all;
+                    }
+                }else {
+                    visited[i][j] = 1;
+                }
+            }
+        }
+        return ret;
+    }
+    public int findAllComputer(Tupe tupe,int[][] grid,int[][] visited){
+        Stack<Tupe> stack = new Stack<>();
+        stack.add(tupe);
+        int count = 0;
+        while (stack.isEmpty() ==false){
+            Tupe tupe1 = stack.pop();
+            if (rows.containsKey(tupe1.y)==false){
+                for (int i = 0; i < visited.length; i++) {
+                    if (grid[i][tupe1.y] == 1 && visited[i][tupe1.y] != 1){
+                        visited[i][tupe1.y]=1;
+                        Tupe subTp= new Tupe(i,tupe1.y);
+                        stack.add(subTp);
+                        count += 1;
+                    }else {
+                        visited[i][tupe1.y]=1;
+                    }
+                }
+            }
+
+
+            if (cols.containsKey(tupe1.x)==false){
+                cols.put(tupe1.x,1);
+                for (int i = 0; i < visited[0].length; i++) {
+                    if (grid[tupe1.x][i] == 1 && visited[tupe1.x][i] != 1){
+                        visited[tupe1.x][i]=1;
+                        stack.add(new Tupe(tupe1.x,i));
+                        count += 1;
+                    }else {
+                        visited[tupe1.x][i]=1;
+                    }
+                }
+            }
+        }
+        return count;
     }
 ```
