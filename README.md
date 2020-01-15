@@ -26,7 +26,7 @@
 |类型|类型|link|
 |:----:|:----:|:----:|
 |二叉树|遍历二叉树|[将有序数组转换为二叉搜索树](https://github.com/ifgyong/leetCode/wiki/%5Bleetcode--0103%5D%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%94%AF%E9%BD%BF%E5%BD%A2%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86)<br />[二叉树的锯齿形层次遍历](https://github.com/ifgyong/leetCode/wiki/%5Bleetcode--0103%5D%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%94%AF%E9%BD%BF%E5%BD%A2%E5%B1%82%E6%AC%A1%E9%81%8D%E5%8E%86)<br />[二叉树最大路径和](https://github.com/ifgyong/leetCode/wiki/%5Bleetcode--0124%5D%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E7%9A%84%E6%9C%80%E5%A4%A7%E8%B7%AF%E5%BE%84%E5%92%8C)<br/> [二叉树的后序遍历](https://github.com/ifgyong/leetCode/wiki/%5Bleetcode--0145%5D%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86)<br/> [从前序与中序遍历序列构造二叉树](https://github.com/ifgyong/leetCode/wiki/%5Bleetcode%E2%80%940105%5D%E4%BB%8E%E5%89%8D%E5%BA%8F%E4%B8%8E%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91)<br>[从二叉搜索树到更大和树](https://github.com/ifgyong/leetCode/wiki/%5Bleetcode%E2%80%941038%5D%E4%BB%8E%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E5%88%B0%E6%9B%B4%E5%A4%A7%E5%92%8C%E6%A0%91)|
-|图|图|[310.最小高度树](https://github.com/ifgyong/SF#310-%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91)<br>[785.判断二分图](https://github.com/ifgyong/SF#785-%E5%88%A4%E6%96%AD%E4%BA%8C%E5%88%86%E5%9B%BE)<br>|
+|图|图|[310.最小高度树](https://github.com/ifgyong/SF#310-%E6%9C%80%E5%B0%8F%E9%AB%98%E5%BA%A6%E6%A0%91)<br>[785.判断二分图](https://github.com/ifgyong/SF#785-%E5%88%A4%E6%96%AD%E4%BA%8C%E5%88%86%E5%9B%BE)<br>[841 钥匙和房间](https://github.com/ifgyong/SF#841-%E9%92%A5%E5%8C%99%E5%92%8C%E6%88%BF%E9%97%B4)<br>|
 
 
 
@@ -58,7 +58,7 @@ iOS-Source-Probe 以 MIT 开源协议发布，转载引用请注明出处。
 
 雨水`B`的总面积 = 总面积（A+B+C） - A (柱子面积) - B(空白面积)
 
-```
+```java
 class Solution {
 class ObjIndexAndVal{
     int val;
@@ -139,7 +139,7 @@ class ObjIndexAndVal{
 f(n,m)=f(n-1,m)+f(n,m-1)
 ```
 
-```
+```swift
 class Solution {
  func uniquePaths(_ m: Int, _ n: Int) -> Int {
 	let item = Array.init(repeating: 0, count: m+1)
@@ -160,7 +160,7 @@ class Solution {
 和62不同是机器人走路有障碍
 则在计算路径的时候，遇到障碍则进行不统计路线即可。
 
-```
+```swift
 class Solution {
     func uniquePathsWithObstacles(_ obstacleGrid: [[Int]]) -> Int {
         
@@ -203,7 +203,7 @@ class Solution {
 
 含义是坐标(m,n)的最小路径和等于上边和左边最小值加上当前的路径。
 
-```
+```swift
 func minPathSum(_ grid: [[Int]]) -> Int {
     	let subArray = Array(repeating: 0, count: grid[0].count + 1)
 var array = Array(repeating: subArray, count: grid.count + 1)
@@ -273,7 +273,7 @@ dp看成二维数组，存储了str1[m]转换到str2[n]的步数，则最终的�
 
 > f(m,n) = min(f(m-1,n-1),f(m-1,n),f(m,n-1))
 
-```
+```java
 public int minDistance(String word1, String word2) {
      
     
@@ -394,7 +394,7 @@ public int minimumTotal(List<List<Integer>> triangle) {
 ##### 题解
 图的复制 将每个节点 hash存储，递归即可。
 ##### 代码
-```
+```java
 Map<Integer,Node> map = new HashMap<>();
         public Node cloneGraph(Node node) {
             if (map.containsKey(node.val)){
@@ -434,7 +434,7 @@ Map<Integer,Node> map = new HashMap<>();
 ##### 题解
 其实就是数字的排序的变种，这次排序是用的字符串而已。
 
-```
+```java
     public String largestNumber(int[] nums) {
      //数字为空直接返回
   if (nums.length == 0)return "0";
@@ -482,7 +482,7 @@ Map<Integer,Node> map = new HashMap<>();
 
 其实是滑动窗口，窗口大小是10，只需要将每个窗口使用hash存储即可，当遇到hash中已有，则加入数组中。
 
-```
+```java
     public List<String> findRepeatedDnaSequences(String s) {
          List<String> ret = new ArrayList<>();
         Map<String,Integer> map = new HashMap<>();
@@ -534,7 +534,7 @@ Map<Integer,Node> map = new HashMap<>();
   0 1 0 0
 ```
 
-```
+```java
     public int rangeBitwiseAnd(int m, int n) {
         int ret = m;
         int i = 0;
@@ -665,7 +665,7 @@ func canFinish(_ numCourses: Int, _ prerequisites: [[Int]]) -> Bool {
 ### 题解
 根据有向图的 是否有环来判断是否有正确的顺序来安排课程，有环则返回空，无环则按照拓扑排序输出，注意  没有依赖的课程最后也是需要 安排进去的。
 
-```
+```swift
 // swift
 func findOrder(_ numCourses: Int, _ prerequisites: [[Int]]) -> [Int] {
 	var defaultList = [Int]()
@@ -780,7 +780,7 @@ func findOrder(_ numCourses: Int, _ prerequisites: [[Int]]) -> [Int] {
 ![](./source/310-1.png)
 ### 代码
 #### 邻接矩阵
-```
+```swift
 func findMinHeightTrees(_ n: Int, _ edges: [[Int]]) -> [Int] {
    if n < 1 {
 	   return [Int]()
@@ -843,7 +843,7 @@ func findMinHeightTrees(_ n: Int, _ edges: [[Int]]) -> [Int] {
 }
 ```
 #### 邻接链表
-```
+```swift
 func findMinHeightTrees(_ n: Int, _ edges: [[Int]]) -> [Int] {
 	if n == 1{
 		return [0]
@@ -1012,7 +1012,7 @@ graph[i] 不会包含 i 或者有重复的值。
 #### 题解
 染色法，将节点染色成相邻接点为不同颜色即可，颜色染完仍然颜色无重复及可以二分，否则不可。
 
-```
+```swift
 func isBipartite(_ graph: [[Int]]) -> Bool {
 	let length  = graph.count
 
@@ -1097,11 +1097,6 @@ func canVisitAllRooms(_ rooms: [[Int]]) -> Bool {
 	}
 	return vsed.count == rooms.count
 }
-
-作者：fgyong_cn
-链接：https://leetcode-cn.com/problems/keys-and-rooms/solution/swift-dfs-ben-zhi-shang-shi-bian-li-tu-by-fgyong_c/
-来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 ```
 ### 1267
 #### 题目
@@ -1143,7 +1138,7 @@ grid[i][j] == 0 or 1
 #### 题解
 按照每行每列统计，当每行大于1 或每列大于1 则进入计数。
 
-```
+```java
     public int countServers2(int[][] grid) {
     //统计每行的服务器个数
         int[] rows = new int[grid.length];
@@ -1169,7 +1164,7 @@ grid[i][j] == 0 or 1
     }
 ```
 或者使用dfs搜索
-```
+```java
 class Tupe{
     int x;
     int y;
